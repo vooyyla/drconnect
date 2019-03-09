@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "335792197187",
+    "firebase_url": "https://drconnect-e3b84.firebaseio.com",
+    "project_id": "drconnect-e3b84",
+    "storage_bucket": "drconnect-e3b84.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:335792197187:android:01adfaa49f9a2470",
+        "android_client_info": {
+          "package_name": "com.prophet.drconnect"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "335792197187-qe4pnign0ti5p2v3kfqbbkfpo6u13f3m.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.prophet.drconnect",
+            "certificate_hash": "3d28524bc7f8652333a3b9851a24a0f2ec3db7ab"
+          }
+        },
+        {
+          "client_id": "335792197187-hlmj8lsch75hmilvo95c99kgloumaofo.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC4N4xxAq0z2YBrqzP9iJ2p2ckhsGU6hA4"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "335792197187-hlmj8lsch75hmilvo95c99kgloumaofo.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

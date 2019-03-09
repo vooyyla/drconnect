@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_menu_home"
+            android:title="@string/nav_menu_home"
+            android:icon="@drawable/ic_nav_menu_home"
+            />
+        <item
+            android:id="@+id/nav_menu_appointments"
+            android:title="@string/nav_menu_appointments"
+            android:icon="@drawable/ic_nav_menu_appointments"/>
+        <item
+            android:id="@+id/nav_menu_clinics"
+            android:title="@string/nav_menu_clinics"
+            android:icon="@drawable/ic_nav_menu_clinics"/>
+        <item
+            android:id="@+id/nav_menu_doctors"
+            android:title="@string/nav_menu_doctors"
+            android:icon="@drawable/ic_nav_menu_doctors"/>
+        <item
+            android:id="@+id/nav_menu_services"
+            android:icon="@drawable/ic_menu_services"
+            android:title="@string/nav_menu_services"/>
+        <item
+            android:id="@+id/nav_menu_chats"
+            android:icon="@drawable/ic_menu_chat"
+            android:title="@string/nav_menu_chats"/>
+
+    </group>
+
+    <item android:title="">
+        <menu>
+            <item
+                android:id="@+id/nav_menu_about_us"
+                android:title="@string/nav_menu_about_us"
+                android:icon="@drawable/ic_nav_menu_about_us"/>
+            <item
+                android:id="@+id/nav_menu_contact_us"
+                android:title="@string/nav_menu_contact_us"
+                android:icon="@drawable/ic_nav_menu_contact_us"/>
+            <item
+                android:id="@+id/nav_menu_news"
+                android:title="@string/nav_menu_news"
+                android:icon="@drawable/ic_nav_menu_news"/>
+            <item
+                android:id="@+id/nav_menu_settings"
+                android:title="@string/nav_menu_settings"
+                android:icon="@drawable/ic_nav_menu_settings"/>
+        </menu>
+    </item>
+
+    <item
+        android:title="">
+        <menu>
+
+            <item
+                android:id="@+id/nav_menu_sign_out"
+                android:icon="@drawable/ic_nav_menu_sign_out"
+                android:title="@string/nav_menu_sign_out" />
+
+        </menu>
+    </item>
+
+</menu>
