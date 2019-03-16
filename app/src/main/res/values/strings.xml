@@ -6,7 +6,7 @@
     <string name="nav_header_subtitle">android.studio@android.com</string>
     <string name="nav_header_desc">Navigation header</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
+    <!-- Nav Drawer Menu -->
     <string name="activity_profile"></string>
     <string name="nav_menu_home">Dashboard</string>
     <string name="nav_menu_doctors">Doctors</string>
@@ -23,11 +23,9 @@
     <!-- Appointment -->
     <string name="get_appointment">Get Appointment</string>
     <string name="add_to_favourite">Add to favourite</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="title_activity_settings">Settings</string>
 
     <!-- Strings related to Settings -->
+    <string name="title_activity_settings">Settings</string>
 
     <!-- Example General settings -->
     <string name="pref_header_general">General</string>
@@ -95,5 +93,7 @@
 
     <!-- Accessories related -->
     <string name="search_hint">Enter doctors name</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
 
 </resources>
