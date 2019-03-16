@@ -7,9 +7,8 @@
 
     <dimen name="card_margin">5dp</dimen>
     <dimen name="card_album_radius">5dp</dimen>
-    <dimen name="album_cover_height">160dp</dimen>
+    <dimen name="album_cover_height">180dp</dimen>
     <dimen name="album_title_padding">10dp</dimen>
-    <dimen name="doctor_name">15dp</dimen>
-    <dimen name="doctor_qualification">14dp</dimen>
-    <dimen name="doctor_specialty">18dp</dimen>
+    <dimen name="doctor_name">18dp</dimen>
+    <dimen name="doctor_specialty">15dp</dimen>
 </resources>

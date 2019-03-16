@@ -19,11 +19,11 @@
 
             <ImageView
                 android:id="@+id/thumbnail"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/album_cover_height"
+                android:layout_width="390dp"
+                android:layout_height="225dp"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:clickable="true"
-                android:scaleType="fitXY"/>
+                android:scaleType="fitXY" />
 
             <TextView
                 android:id="@+id/title"
@@ -39,18 +39,8 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/qualification"
-                android:layout_below="@id/title"
-                android:paddingStart="@dimen/album_title_padding"
-                android:paddingEnd="@dimen/album_title_padding"
-                android:paddingBottom="5dp"
-                android:textSize="@dimen/doctor_qualification"/>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
                 android:id="@+id/specialty"
-                android:layout_below="@id/qualification"
+                android:layout_below="@id/title"
                 android:paddingStart="@dimen/album_title_padding"
                 android:paddingEnd="@dimen/album_title_padding"
                 android:paddingBottom="5dp"
@@ -60,7 +50,7 @@
                 android:layout_width="20dp"
                 android:layout_height="30dp"
                 android:id="@+id/overflow"
-                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
                 android:layout_below="@id/thumbnail"
                 android:layout_marginTop="10dp"
                 android:scaleType="centerCrop"

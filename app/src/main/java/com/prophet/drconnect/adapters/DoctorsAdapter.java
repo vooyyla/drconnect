@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -37,9 +38,8 @@ public class DoctorsAdapter extends RecyclerView.Adapter<DoctorsViewHolder> {
     public void onBindViewHolder(final DoctorsViewHolder holder, int position) {
         Doctors doctors = doctorsList.get(position);
         holder.title.setText(doctors.getName());
-        holder.qualification.setText(doctors.getQualification());
         holder.specialty.setText(doctors.getSpecialty());
-
+        Log.d("DoctorsAdapter", "spcialty "+ doctors.getSpecialty());
         Glide.with(mContext).load(doctors.getThumbnail()).into(holder.thumbnail);
 
         holder.overflow.setOnClickListener(new View.OnClickListener() {

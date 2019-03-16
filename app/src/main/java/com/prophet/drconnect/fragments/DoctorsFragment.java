@@ -1,20 +1,30 @@
 package com.prophet.drconnect.fragments;
 
 
+import android.app.SearchManager;
+import android.content.Context;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.prophet.drconnect.R;
 import com.prophet.drconnect.adapters.DoctorsAdapter;
 import com.prophet.drconnect.models.Doctors;
@@ -30,9 +40,13 @@ import java.util.List;
  */
 public class DoctorsFragment extends Fragment {
 
-    private RecyclerView recyclerView;
-    private DoctorsAdapter adapter;
     private List<Doctors> list;
+    private DoctorsAdapter adapter;
+    private DatabaseReference databaseReference;
+    private ValueEventListener valueEventListener;
+
+    private SearchView searchView = null;
+    private SearchView.OnQueryTextListener queryTextListener;
 
     /**
      * Use this factory method to create a new instance of
@@ -47,66 +61,103 @@ public class DoctorsFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
         getActivity().setTitle(R.string.nav_menu_doctors);
+
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.blank_fragment, container, false);
+        databaseReference = FirebaseDatabase.getInstance().getReference();
 
-        recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
         list = new ArrayList<>();
+
+        RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
+
         adapter = new DoctorsAdapter(getContext(), list);
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getContext(), 2);
         recyclerView.setLayoutManager(layoutManager);
-        recyclerView.addItemDecoration(new GridSpacingItemDecoration(2, dpTopixel(10), true));
+        recyclerView.addItemDecoration(new GridSpacingItemDecoration(2, dpToPixel(10), true));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(adapter);
 
-        prepareDoctors();
+        asynctask();
 
         return view;
     }
 
-    private void prepareDoctors() {
-        int[] covers = new int[] {
-                R.drawable.album1,
-                R.drawable.album2,
-                R.drawable.album3,
-                R.drawable.album4,
-                R.drawable.album5,
-                R.drawable.album6,
-                R.drawable.album7,
-                R.drawable.album8,
-                R.drawable.album9,
-                R.drawable.album10,
-                R.drawable.album11
-        };
-        Doctors doctor = new Doctors("Dr. Tom Cruise", "FCPS", "Medicine", covers[0]);
-        list.add(doctor);
-        doctor = new Doctors("Dr. Tom Hardy", "MBBS", "Cardiac", covers[1]);
-        list.add(doctor);
-        doctor = new Doctors("Dr. Hillery Clinton", "FCPS", "Ontropologist", covers[2]);
-        list.add(doctor);
-        doctor = new Doctors("Dr. Angelina Jolly", "FCPS", "Medicine", covers[3]);
-        list.add(doctor);
-        doctor = new Doctors("Dr. Sheha Lubna", "FCPS", "Medicine", covers[4]);
-        list.add(doctor);
-        doctor = new Doctors("Dr. Farhin Khandkar", "FCPS", "Medicine", covers[5]);
-        list.add(doctor);
-        doctor = new Doctors("Dr. Mehedi Hasan", "FCPS", "Medicine", covers[6]);
-        list.add(doctor);
-        doctor = new Doctors("Dr. T M Haque", "FCPS", "Medicine", covers[7]);
-        list.add(doctor);
-        doctor = new Doctors("Dr. Vendetta", "FCPS", "Medicine", covers[8]);
-        list.add(doctor);
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.search, menu);
+        MenuItem search = menu.findItem(R.id.search);
+        SearchManager searchManager = (SearchManager) getActivity().getSystemService(Context.SEARCH_SERVICE);
 
-        adapter.notifyDataSetChanged();
+        if (search != null){
+            searchView = (SearchView) search.getActionView();
+        }
+        if (searchView != null) {
+            searchView.setSearchableInfo(searchManager.getSearchableInfo(getActivity().getComponentName()));
+
+            queryTextListener = new SearchView.OnQueryTextListener() {
+                @Override
+                public boolean onQueryTextSubmit(String s) {
+                    Log.d("onQueryTextSubmit", s);
+                    return true;
+                }
+
+                @Override
+                public boolean onQueryTextChange(String s) {
+                    Log.d("onQueryTextChange", s);
+                    return true;
+                }
+            };
+            searchView.setOnQueryTextListener(queryTextListener);
+        }
+        inflater.inflate(R.menu.filter, menu);
+        super.onCreateOptionsMenu(menu, inflater);
     }
 
-    private int dpTopixel(int dp) {
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.search:
+                return false;
+                default:
+                    break;
+        }
+        searchView.setOnQueryTextListener(queryTextListener);
+        return super.onOptionsItemSelected(item);
+    }
+
+    private int dpToPixel(int dptopixel) {
         Resources resources = getResources();
-        return Math.round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, resources.getDisplayMetrics()));
+        return Math.round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dptopixel, resources.getDisplayMetrics()));
     }
+
+    private void asynctask() {
+        databaseReference = databaseReference.child("doctors");
+
+        valueEventListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot snapshot: dataSnapshot.getChildren()) {
+                    String name = snapshot.child("name").getValue(String.class);
+                    String specialty = snapshot.child("specialty").getValue(String.class);
+                    String thumbnail = snapshot.child("thumbnail").getValue(String.class);
+                    Doctors doctor = new Doctors(name, specialty,thumbnail);
+                    list.add(doctor);
+                    adapter.notifyDataSetChanged();
+                    Log.d(name, specialty);
+                    Log.d("DoctorsFragment", "list added");
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {}
+        };
+        databaseReference.addListenerForSingleValueEvent(valueEventListener);
+    }
+
 }

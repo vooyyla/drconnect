@@ -16,10 +16,11 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.firebase.ui.auth.AuthUI;
-import com.google.android.gms.auth.api.Auth;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -28,14 +29,15 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.prophet.drconnect.adapters.ChatMessageAdapter;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.prophet.drconnect.fragments.AboutUsFragment;
 import com.prophet.drconnect.fragments.AppointmentsFragment;
 import com.prophet.drconnect.fragments.ChatsFragment;
 import com.prophet.drconnect.fragments.ClinicsFragment;
 import com.prophet.drconnect.fragments.DoctorsFragment;
 import com.prophet.drconnect.fragments.HomeFragment;
 import com.prophet.drconnect.fragments.ServicesFragment;
-import com.prophet.drconnect.models.ChatMessage;
 
 import java.util.Arrays;
 
@@ -48,7 +50,6 @@ public class MainActivity extends AppCompatActivity
 
     private String mUsername;
     private ChildEventListener childEventListener;
-    private FirebaseDatabase firebaseDatabase;
     private DatabaseReference databaseReference;
     private FirebaseAuth firebaseAuth;
     private FirebaseAuth.AuthStateListener authStateListener;
@@ -60,8 +61,11 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         FirebaseApp.initializeApp(this);
-        firebaseDatabase = FirebaseDatabase.getInstance();
+        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+        firebaseDatabase.setPersistenceEnabled(true);
         databaseReference = firebaseDatabase.getReference();
+        FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
+        StorageReference storageReference = firebaseStorage.getReference();
         firebaseAuth = FirebaseAuth.getInstance();
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -71,6 +75,15 @@ public class MainActivity extends AppCompatActivity
         toggle.syncState();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        View view = navigationView.getHeaderView(0);
+        ImageView profileImage = (ImageView) view.findViewById(R.id.nav_profile_imageView);
+        profileImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, ProfileActivity.class);
+                startActivity(intent);
+            }
+        });
         navigationView.setNavigationItemSelectedListener(this);
 
 
@@ -177,7 +190,7 @@ public class MainActivity extends AppCompatActivity
             displaySelectedFragment(fragment);
 
         }else if (id == R.id.nav_menu_about_us) {
-            fragment = new DoctorsFragment();
+            fragment = new AboutUsFragment();
             displaySelectedFragment(fragment);
 
         } else if (id == R.id.nav_menu_contact_us) {

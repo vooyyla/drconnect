@@ -7,7 +7,7 @@
     <string name="nav_header_desc">Navigation header</string>
 
     <!-- TODO: Remove or change this placeholder text -->
-
+    <string name="activity_profile"></string>
     <string name="nav_menu_home">Dashboard</string>
     <string name="nav_menu_doctors">Doctors</string>
     <string name="nav_menu_appointments">Appointments</string>
@@ -84,5 +84,16 @@
     <string name="pref_ringtone_silent">Silent</string>
 
     <string name="pref_title_vibrate">Vibrate</string>
+
+    <!-- Pofile activity-->
+    <string name="enter_name">Enter name</string>
+    <string name="departments">Departments</string>
+    <string name="enter_specialty">Enter specialty</string>
+    <string name="enter_degrees">Enter degrees</string>
+    <string name="about_me">About me</string>
+    <string name="btn_submit">Submit</string>
+
+    <!-- Accessories related -->
+    <string name="search_hint">Enter doctors name</string>
 
 </resources>
