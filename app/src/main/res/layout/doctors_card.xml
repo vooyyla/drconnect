@@ -33,8 +33,9 @@
                 android:paddingStart="@dimen/album_title_padding"
                 android:paddingEnd="@dimen/album_title_padding"
                 android:paddingTop="@dimen/album_title_padding"
-                android:textColor="@color/title"
-                android:textSize="@dimen/doctor_name"/>
+                android:textColor="@color/fui_bgGitHub"
+                style="@style/CustomFontStyle"
+                android:textSize="@dimen/font_small"/>
 
             <TextView
                 android:layout_width="match_parent"
@@ -44,7 +45,8 @@
                 android:paddingStart="@dimen/album_title_padding"
                 android:paddingEnd="@dimen/album_title_padding"
                 android:paddingBottom="5dp"
-                android:textSize="@dimen/doctor_specialty"/>
+                android:textColor="@color/title"
+                style="@style/CustomFontStyle"/>
 
             <ImageView
                 android:layout_width="20dp"

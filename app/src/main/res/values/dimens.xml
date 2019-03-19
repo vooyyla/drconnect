@@ -9,6 +9,7 @@
     <dimen name="card_album_radius">5dp</dimen>
     <dimen name="album_cover_height">180dp</dimen>
     <dimen name="album_title_padding">10dp</dimen>
-    <dimen name="doctor_name">18dp</dimen>
-    <dimen name="doctor_specialty">15dp</dimen>
+    <dimen name="font_big">22sp</dimen>
+    <dimen name="font_medium">17sp</dimen>
+    <dimen name="font_small">15sp</dimen>
 </resources>

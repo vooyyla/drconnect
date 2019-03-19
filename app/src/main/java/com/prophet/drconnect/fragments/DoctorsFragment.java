@@ -82,7 +82,7 @@ public class DoctorsFragment extends Fragment {
         recyclerView.addItemDecoration(new GridSpacingItemDecoration(2, dpToPixel(10), true));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(adapter);
-
+        adapter.setmOnItemClickListener(onItemClickListener);
         asynctask();
 
         return view;
@@ -120,6 +120,17 @@ public class DoctorsFragment extends Fragment {
     }
 
     @Override
+    public void onPause() {
+        super.onPause();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+    }
+
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case R.id.search:
@@ -143,14 +154,13 @@ public class DoctorsFragment extends Fragment {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot snapshot: dataSnapshot.getChildren()) {
+                    String id = snapshot.getKey();
                     String name = snapshot.child("name").getValue(String.class);
                     String specialty = snapshot.child("specialty").getValue(String.class);
                     String thumbnail = snapshot.child("thumbnail").getValue(String.class);
-                    Doctors doctor = new Doctors(name, specialty,thumbnail);
+                    Doctors doctor = new Doctors(id, name, specialty,thumbnail);
                     list.add(doctor);
                     adapter.notifyDataSetChanged();
-                    Log.d(name, specialty);
-                    Log.d("DoctorsFragment", "list added");
                 }
             }
 
@@ -160,4 +170,24 @@ public class DoctorsFragment extends Fragment {
         databaseReference.addListenerForSingleValueEvent(valueEventListener);
     }
 
+    private View.OnClickListener onItemClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            // This viewHolder will have all required values.
+            RecyclerView.ViewHolder viewHolder = (RecyclerView.ViewHolder) view.getTag();
+            int position = viewHolder.getAdapterPosition();
+            // viewHolder.getItemId();
+            // viewHolder.getItemViewType();
+            // viewHolder.itemView;
+            Doctors doctor = list.get(position);
+            DoctorProfileFragment fragment = new DoctorProfileFragment();
+            Bundle bundle = new Bundle();
+            bundle.putString("id", doctor.getId());
+            bundle.putString("name", doctor.getName());
+            bundle.putString("specialty", doctor.getSpecialty());
+            fragment.setArguments(bundle);
+            getFragmentManager().beginTransaction().addToBackStack(DoctorsFragment.this.toString()).replace(R.id.recycler_view, fragment).commit();
+
+        }
+    };
 }

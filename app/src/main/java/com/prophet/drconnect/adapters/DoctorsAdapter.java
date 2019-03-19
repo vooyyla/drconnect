@@ -1,7 +1,6 @@
 package com.prophet.drconnect.adapters;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -10,18 +9,20 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.prophet.drconnect.R;
 import com.prophet.drconnect.models.Doctors;
-import com.prophet.drconnect.views.DoctorsViewHolder;
 
 import java.util.List;
 
-public class DoctorsAdapter extends RecyclerView.Adapter<DoctorsViewHolder> {
+public class DoctorsAdapter extends RecyclerView.Adapter<DoctorsAdapter.DoctorsViewHolder> {
     private Context mContext;
     private List<Doctors> doctorsList;
+    private View.OnClickListener mOnItemClickListener;
 
     public DoctorsAdapter(Context mContext, List<Doctors> doctorsList) {
         this.mContext = mContext;
@@ -35,11 +36,10 @@ public class DoctorsAdapter extends RecyclerView.Adapter<DoctorsViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(final DoctorsViewHolder holder, int position) {
+    public void onBindViewHolder(final DoctorsViewHolder holder, final int position) {
         Doctors doctors = doctorsList.get(position);
         holder.title.setText(doctors.getName());
         holder.specialty.setText(doctors.getSpecialty());
-        Log.d("DoctorsAdapter", "spcialty "+ doctors.getSpecialty());
         Glide.with(mContext).load(doctors.getThumbnail()).into(holder.thumbnail);
 
         holder.overflow.setOnClickListener(new View.OnClickListener() {
@@ -48,6 +48,28 @@ public class DoctorsAdapter extends RecyclerView.Adapter<DoctorsViewHolder> {
                 showPopUpMenu(holder.overflow);
             }
         });
+    }
+
+    @Override
+    public int getItemCount() {
+        return doctorsList.size();
+    }
+
+    public class DoctorsViewHolder extends RecyclerView.ViewHolder{
+        public TextView title, specialty;
+        public ImageView thumbnail, overflow;
+
+        public DoctorsViewHolder(View view) {
+            super(view);
+
+            title = (TextView) view.findViewById(R.id.title);
+            specialty = (TextView) view.findViewById(R.id.specialty);
+            thumbnail = (ImageView) view.findViewById(R.id.thumbnail);
+            overflow = (ImageView) view.findViewById(R.id.overflow);
+
+            view.setTag(this);
+            view.setOnClickListener(mOnItemClickListener);
+        }
     }
 
     private void showPopUpMenu(View view) {
@@ -76,8 +98,7 @@ public class DoctorsAdapter extends RecyclerView.Adapter<DoctorsViewHolder> {
         }
     }
 
-    @Override
-    public int getItemCount() {
-        return doctorsList.size();
+    public void setmOnItemClickListener(View.OnClickListener onItemClickListener) {
+        mOnItemClickListener = onItemClickListener;
     }
 }

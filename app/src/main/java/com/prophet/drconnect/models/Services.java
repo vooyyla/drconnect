@@ -4,6 +4,8 @@ public class Services {
     private int id, thumbnail;
     private String clinicName, serviceType;
 
+    public Services() {}
+
     public Services(int thumbnail, String clinicName, String serviceType) {
         this.thumbnail = thumbnail;
         this.clinicName = clinicName;

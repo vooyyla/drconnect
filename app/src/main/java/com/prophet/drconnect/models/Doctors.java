@@ -1,10 +1,14 @@
 package com.prophet.drconnect.models;
 
-import com.google.firebase.database.PropertyName;
 
-public class Doctors {
+import com.google.firebase.storage.StorageReference;
+
+import java.io.Serializable;
+
+public class Doctors implements Serializable {
 
 
+    private String id;
     private String name;
     private String degree;
     private String departments;
@@ -15,7 +19,17 @@ public class Doctors {
 
     public Doctors(){} // no-argument constructor
 
-    public Doctors(String name, String departments, String bio, String degree, String specialty, String thumbnail, String email) {
+    public Doctors(String name, String degree, String departments, String specialty, String thumbnail, String  bio) {
+        this.name = name;
+        this.degree = degree;
+        this.departments = departments;
+        this.specialty = specialty;
+        this.thumbnail = thumbnail;
+        this.bio = bio;
+    }
+
+    public Doctors(String id, String name, String departments, String bio, String degree, String specialty, String thumbnail, String email) {
+        this.id = id;
         this.name = name;
         this.departments = departments;
         this.bio = bio;
@@ -25,7 +39,8 @@ public class Doctors {
         this.thumbnail = thumbnail;
     }
 
-    public Doctors(String name, String specialty, String thumbnail) {
+    public Doctors(String id, String name, String specialty, String thumbnail) {
+        this.id = id;
         this.name = name;
         this.specialty = specialty;
         this.thumbnail = thumbnail;
@@ -55,5 +70,9 @@ public class Doctors {
 
     public String getEmail() {
         return email;
+    }
+
+    public String getId() {
+        return id;
     }
 }
